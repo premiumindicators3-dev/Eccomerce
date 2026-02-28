@@ -6,6 +6,17 @@ const {id }= useParams();
 
 const [product,setProduct] = useState([]);
 
+const [quantity,setQuantity] = useState(1);
+
+
+const increaseQty = ()=>{
+  setQuantity(quantity+1);
+}
+
+const decreaseQty = ()=>{
+  setQuantity(quantity-1);
+}
+
 useEffect(()=>{
     const getDetails = async()=>{
         const res = await  fetch(`http://localhost:4000/api/products/${id}`)
@@ -15,6 +26,27 @@ useEffect(()=>{
     }
     getDetails();
 },[])
+
+const addToCart =async ()=>{
+  const cartItem = {
+    productId:product.id,
+    quantity,
+    price:product.price
+  }
+  const url = "http://localhost:4000/api/carts";
+  const options = {
+    method:"POST",
+    headers:{
+      "Content-type":"application/json"
+    },
+    credentials:"include",
+    body:JSON.stringify(cartItem)
+  }
+  const res = await fetch(url,options);
+  if(res.status==201){
+    console.log("cart created");
+  }
+}
     
   return (
     <div className="max-w-4xl mx-auto bg-white rounded-2xl shadow-lg overflow-hidden mt-10 p-6 md:flex">
@@ -41,12 +73,27 @@ useEffect(()=>{
           </p>
         </div>
 
+    <div>
+      <button onClick={decreaseQty} className="p-2 bg-blue-600">-</button>
+      {quantity}
+      <button onClick={increaseQty} className="p-2 bg-blue-600">+</button>
+
+    </div>
+
         <button
           
           className="mt-6 w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition duration-300"
         >
           Buy Now
         </button>
+        <button
+          
+          className="mt-6 w-full bg-blue-600 text-white py-3 rounded-xl font-semibold hover:bg-blue-700 transition duration-300"
+          onClick={addToCart}
+        >
+          Add To Cart Now
+        </button>
+
       </div>
     </div>
   );

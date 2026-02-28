@@ -5,6 +5,9 @@ const productSchema = new Schema({
     price:Number,
     description:String,
     image:String,
-    stock:String
+    stock:{
+        type:String,
+        default:"in stock"
+    }
 })
 module.exports = productSchema

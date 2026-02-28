@@ -6,7 +6,8 @@ const router = require("express").Router();
 const secureAuth = [
     passport.authenticate("jwt",{session:false}),
      (req,res,next)=>{    
-    
+        console.log(req.user);
+        
         if(req.user.role=="admin"){
             next();
         }
@@ -31,7 +32,7 @@ router.post("/",secureAuth,async(req,res)=>{
         const prdouctDetails = req.body;
         const product = new Product(prdouctDetails);
         await product.save();
-        res.send("Product Added");
+        res.status(201).send({msg:"product added"});
 })
 router.put("/:id",secureAuth,async(req,res)=>{
     const {id} = req.params;
@@ -46,7 +47,7 @@ router.put("/:id",secureAuth,async(req,res)=>{
 router.delete("/:id",secureAuth,async(req,res)=>{
     const {id}=req.params;
     await Product.deleteOne({_id:id});
-    res.send("Product Deleted");
+    res.status(200);
 })
 
 
