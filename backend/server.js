@@ -11,7 +11,7 @@ const cors = require("cors");
 
 const registerRoute =require("./Routes/registerRoute");
 const loginRoute = require("./Routes/loginRoute");
-
+const cartRoute = require("./Routes/cartRoute");
 const productRoute = require("./Routes/productRoute");
 
 const passport = require("passport");
@@ -46,7 +46,7 @@ require("./config/passport");
 app.use("/api/register",registerRoute);
 app.use("/api/login",loginRoute);
 app.use("/api/products",productRoute);
-
+app.use("/api/carts",cartRoute);
 
 app.get("/manohar",passport.authenticate("jwt",{session:false}),(req,res)=>{
     res.send("Hello World");

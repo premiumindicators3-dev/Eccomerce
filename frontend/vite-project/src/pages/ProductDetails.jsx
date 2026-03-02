@@ -29,7 +29,7 @@ useEffect(()=>{
 
 const addToCart =async ()=>{
   const cartItem = {
-    productId:product.id,
+    productId:id,
     quantity,
     price:product.price
   }
@@ -44,7 +44,7 @@ const addToCart =async ()=>{
   }
   const res = await fetch(url,options);
   if(res.status==201){
-    console.log("cart created");
+   
   }
 }
     

@@ -14,7 +14,9 @@ const Register = () => {
             body:JSON.stringify(userDetails)
         }
         const res = await fetch("http://localhost:4000/api/register",options)
-        const data =await res.json();
+        if(res.status==201){
+          navigator("/products");
+        }
     }
 
   return (
