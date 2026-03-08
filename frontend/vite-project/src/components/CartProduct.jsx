@@ -1,7 +1,6 @@
 import { FaTrash } from "react-icons/fa";
 
 const CartProduct = ({ item, increaseQty, decreaseQty, removeItem }) => {
-
   const total = item.price * item.quantity;
 
   return (
