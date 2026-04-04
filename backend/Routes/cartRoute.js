@@ -11,6 +11,13 @@ router.get("/",passport.authenticate("jwt", { session: false }),async(req,res)=>
     res.json(items);    
 })
 
+router.put("/:id",passport.authenticate("jwt",{session:false}),async(req,res)=>{
+    const userId = req.user._id;
+    const {id:productId} = req.params;
+    await Cart.updateOne({userId,"items.productId":productId},{quantity:req.body.quantity});
+    res.json({msg:"done"}).status(201);
+})
+
 router.post("/", passport.authenticate("jwt", { session: false }), async (req, res) => {
     const { quantity, productId } = req.body;
 
